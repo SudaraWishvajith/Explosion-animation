@@ -4,9 +4,9 @@ import { Ring } from "./Ring";
 export const Experience = () => {
   return (
     <>
-      <OrbitControls />
-      <Ring />
-      <Environment preset="sunset" background blur={0.4} />
+      <OrbitControls enableZoom={false} />
+      <Ring scale={0.3} />
+      <Environment preset="sunset" background blur={0.5} />
     </>
   );
 };

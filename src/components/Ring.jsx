@@ -9,8 +9,51 @@ import * as THREE from "three";
 
 export function Ring(props) {
     const { nodes, materials } = useGLTF("/models/Ring.glb");
+    const group = useRef();
+
+    useEffect(() => {
+        const groupWorldPosition = new THREE.Vector3();
+        group.current.getWorldPosition(groupWorldPosition);
+    
+        group.current.children.forEach((mesh) => {
+          mesh.originalPosition = mesh.position.clone();
+          const meshWorldPosition = new THREE.Vector3();
+          mesh.getWorldPosition(meshWorldPosition);
+    
+          mesh.directionVector = meshWorldPosition
+            .clone()
+            .sub(groupWorldPosition)
+            .normalize();
+          mesh.targetPosition = mesh.originalPosition
+            .clone()
+            .add(mesh.directionVector.clone().multiplyScalar(5));
+        });
+      }, []);
+    
+      const scrollData = useScroll();
+
+      useFrame(() => {
+        group.current.children.forEach((mesh) => {
+            mesh.position.x = THREE.MathUtils.lerp(
+                mesh.originalPosition.x,
+                mesh.targetPosition.x,
+                scrollData.offset // 0 at the beginning and 1 after scroll
+              );
+              mesh.position.y = THREE.MathUtils.lerp(
+                mesh.originalPosition.y,
+                mesh.targetPosition.y,
+                scrollData.offset // 0 at the beginning and 1 after scroll
+              );
+              mesh.position.z = THREE.MathUtils.lerp(
+                mesh.originalPosition.z,
+                mesh.targetPosition.z,
+                scrollData.offset // 0 at the beginning and 1 after scroll
+              );  
+        })
+      })
+
     return (
-        <group {...props} dispose={null}>
+        <group {...props} dispose={null} ref={group}>
             <group scale={2.563}>
                 <mesh
                     castShadow
@@ -19,7 +62,7 @@ export function Ring(props) {
                     material={materials["Material.001"]}
                     scale={74.509}
                 />
-                <mesh
+                {/* <mesh
                     castShadow
                     receiveShadow
                     geometry={nodes.Original.geometry}
@@ -27,7 +70,7 @@ export function Ring(props) {
                     position={[0.005, 0.841, 0.101]}
                     rotation={[-Math.PI / 2, 0, 0]}
                     scale={53.42}
-                />
+                /> */}
             </group>
             <mesh
                 castShadow
