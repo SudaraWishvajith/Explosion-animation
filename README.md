@@ -1,10 +1,4 @@
-# r3f-vite-starter
-A boilerplate to build R3F projects
 
-```
-yarn
-yarn dev
-```
+![image](https://github.com/SudaraWishvajith/PS4-react/assets/93005479/f1d85d57-f2cf-409e-9853-2fd6abe9cefb)
 
-
-![image](https://user-images.githubusercontent.com/6551176/221732091-23ee52cb-4150-42fa-b998-43628d7a6b0d.png)
+![image](https://github.com/SudaraWishvajith/PS4-react/assets/93005479/ad9efd8a-ee49-49ed-b113-edbf95672ae4)
